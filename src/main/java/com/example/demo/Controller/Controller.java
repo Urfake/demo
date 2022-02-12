@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -35,6 +36,21 @@ public class Controller {
     public TableColumn<Employee, String> sexColumn;
 
     @FXML
+    public TextField Fname;
+    @FXML
+    public TextField Lname;
+    @FXML
+    public TextField Ssn;
+    @FXML
+    public DatePicker Bdate;
+    @FXML
+    public TextField Address;
+    @FXML
+    public TextField Sex;
+    @FXML
+    public TextField Salary;
+
+    @FXML
     private void initialize(){
         fNameColumn.setCellValueFactory(cellData -> cellData.getValue().fnameProperty());
         lNameColumn.setCellValueFactory(cellData -> cellData.getValue().lnameProperty());
@@ -55,6 +71,42 @@ public class Controller {
     Connection connection = connectionClass.getConnection();
 
     public ObservableList<Employee> employeeList = FXCollections.observableArrayList();
+
+    /**
+     * Метод -insertPerson(ActionEvent actionEvent)- привязан к кнопке -Создать- на главной странице
+     * при нажатии которой из текста полей -nameField, surnameField, phoneNumberField- формируется
+     * запрос добавления(INSERT) в базу данных.
+     *
+     * Далее значения полей -nameField, surnameField, phoneNumberField- опустошаются и вызывается метод
+     * -initializeTableValues();- для заполнения таблицы новыми данными из Базы данных.
+     *
+     * @param actionEvent
+     */
+    public void insertPerson(ActionEvent actionEvent) {
+        try {
+            Statement statement=connection.createStatement();
+            //String sql="INSERT INTO person VALUES ('"+Fname.getText() + "', '" + Lname.getText() + "', '" + phoneNumberField.getText() + "');";
+
+            String sql = "INSERT INTO employee(Fname, Lname, Ssn, Bdate, Address, Sex, Salary, Dnumber) VALUES ('"+Fname.getText()+"','"+Lname.getText()+"','"+Ssn.getText()+"','"+Bdate.getValue()+"','"+Address.getText()+"','"+Sex.getText()+"','"+Salary.getText()+"', '1')";
+            statement.executeUpdate(sql);
+
+            System.out.println("Success!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        Fname.setText("");
+        Lname.setText("");
+        Ssn.setText("");
+        Address.setText("");
+        Sex.setText("");
+        Salary.setText("");
+
+        initializeTableValues();
+
+    }
+
 
     /**
      * Данный метод делает запрос -SELECT- в базу данных и из полученных данных формирует список
