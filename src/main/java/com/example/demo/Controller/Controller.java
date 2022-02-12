@@ -74,10 +74,10 @@ public class Controller {
 
     /**
      * Метод -insertPerson(ActionEvent actionEvent)- привязан к кнопке -Создать- на главной странице
-     * при нажатии которой из текста полей -nameField, surnameField, phoneNumberField- формируется
+     * при нажатии которой из текста полей -Fname, Lname, Ssn...- формируется
      * запрос добавления(INSERT) в базу данных.
      *
-     * Далее значения полей -nameField, surnameField, phoneNumberField- опустошаются и вызывается метод
+     * Далее значения полей опустошаются и вызывается метод
      * -initializeTableValues();- для заполнения таблицы новыми данными из Базы данных.
      *
      * @param actionEvent
@@ -85,9 +85,15 @@ public class Controller {
     public void insertPerson(ActionEvent actionEvent) {
         try {
             Statement statement=connection.createStatement();
-            //String sql="INSERT INTO person VALUES ('"+Fname.getText() + "', '" + Lname.getText() + "', '" + phoneNumberField.getText() + "');";
-
-            String sql = "INSERT INTO employee(Fname, Lname, Ssn, Bdate, Address, Sex, Salary, Dnumber) VALUES ('"+Fname.getText()+"','"+Lname.getText()+"','"+Ssn.getText()+"','"+Bdate.getValue()+"','"+Address.getText()+"','"+Sex.getText()+"','"+Salary.getText()+"', '1')";
+            String sql = "INSERT INTO " +
+                    "employee(Fname, Lname, Ssn, Bdate, Address, Sex, Salary, Dnumber) " +
+                    "VALUES ('"+Fname.getText()+"','" +
+                    ""+Lname.getText()+"','" +
+                    ""+Ssn.getText()+"','" +
+                    ""+Bdate.getValue()+"','" +
+                    ""+Address.getText()+"','" +
+                    ""+Sex.getText()+"','" +
+                    ""+Salary.getText()+"', '1')";
             statement.executeUpdate(sql);
 
             System.out.println("Success!");
@@ -110,7 +116,7 @@ public class Controller {
 
     /**
      * Данный метод делает запрос -SELECT- в базу данных и из полученных данных формирует список
-     * типа -ObservableList<Person>-, с помощью которого заполняет таблицу -personTable-
+     * типа -ObservableList<Employee>-, с помощью которого заполняет таблицу -personTable-
      */
     public void initializeTableValues(){
         try {
