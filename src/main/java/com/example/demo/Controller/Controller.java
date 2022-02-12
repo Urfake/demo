@@ -1,4 +1,4 @@
-package com.example.demo;
+package com.example.demo.Controller;
 
 import com.example.demo.Connection.ConnectionClass;
 import com.example.demo.Model.Employee;
