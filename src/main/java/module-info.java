@@ -3,6 +3,7 @@ module com.example.demo {
     requires javafx.fxml;
     requires java.sql;
     requires mysql.connector.java;
+    requires javafx.graphics;
 
 
     opens com.example.demo to javafx.fxml;

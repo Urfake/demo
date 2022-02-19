@@ -54,6 +54,7 @@
                                         <TableColumn fx:id="bdateColumn" prefWidth="100.0" text="Дата рождения" />
                                         <TableColumn fx:id="addressColumn" prefWidth="100.0" text="Адрес" />
                                         <TableColumn fx:id="sexColumn" prefWidth="50.0" text="Пол" />
+                                        <TableColumn fx:id="actionColumn" prefWidth="50.0" text=" Действия" />
                                     </columns>
                                 </TableView>
                             </children>

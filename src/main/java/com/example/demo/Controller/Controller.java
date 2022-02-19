@@ -2,14 +2,13 @@ package com.example.demo.Controller;
 
 import com.example.demo.Connection.ConnectionClass;
 import com.example.demo.Model.Employee;
+import com.example.demo.Repository.EmployeeRepository;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -19,6 +18,7 @@ import java.util.Date;
 
 
 public class Controller {
+    final EmployeeRepository repository = new EmployeeRepository();
 
     @FXML
     public TableView<Employee> employeeTable;
@@ -34,6 +34,8 @@ public class Controller {
     public TableColumn<Employee, String> addressColumn;
     @FXML
     public TableColumn<Employee, String> sexColumn;
+    @FXML
+    public TableColumn<Employee, Employee> actionColumn;
 
     @FXML
     public TextField Fname;
@@ -58,7 +60,40 @@ public class Controller {
         bdateColumn.setCellValueFactory(cellData -> cellData.getValue().bdateProperty());
         addressColumn.setCellValueFactory(cellData -> cellData.getValue().addressProperty());
         sexColumn.setCellValueFactory(cellData -> cellData.getValue().sexProperty());
+        actionColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue()));
 
+        initializeTableValues();
+
+        actionColumn.setCellFactory(param -> new TableCell<Employee, Employee>() {
+            private final Button deleteButton = new Button("Delete");
+
+            @Override
+            protected void updateItem(Employee employee, boolean empty) {
+                super.updateItem(employee, empty);
+
+                if (employee == null) {
+                    setGraphic(null);
+                    return;
+                }
+
+                setGraphic(deleteButton);
+
+                deleteButton.setOnAction(event -> removePerson(employee.getSsn()));
+            }
+        });
+    }
+
+    public void removePerson(String ssn) {
+        try {
+            Statement statement=connection.createStatement();
+            String sql = "DELETE FROM employee WHERE ssn = '" + ssn + "'";
+            statement.executeUpdate(sql);
+
+            System.out.println("Success!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         initializeTableValues();
     }
 
@@ -110,8 +145,9 @@ public class Controller {
         Salary.setText("");
 
         initializeTableValues();
-
     }
+
+
 
 
     /**
@@ -119,38 +155,10 @@ public class Controller {
      * типа -ObservableList<Employee>-, с помощью которого заполняет таблицу -personTable-
      */
     public void initializeTableValues(){
-        try {
-            Statement statement=connection.createStatement();
-
-            String sql="SELECT * FROM employee;";
-
-            ResultSet resultSet=statement.executeQuery(sql);
-
-            ObservableList<Employee> personList = FXCollections.observableArrayList();
-
-            if (resultSet.next()){
-                while (resultSet.next()) {
-                    Employee employee = new Employee(
-                            resultSet.getString("Fname"),
-                            resultSet.getString("Lname"),
-                            resultSet.getString("Ssn"),
-                            resultSet.getDate("Bdate"),
-                            resultSet.getString("Address"),
-                            resultSet.getString("Sex"),
-                            resultSet.getDouble("Salary"),
-                            resultSet.getString("Super_ssn"),
-                            resultSet.getInt("Dnumber")
-                    );
-                    personList.add(employee);
-                }
-                employeeTable.setItems(personList);
-            }else {
-                System.out.println("no data");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        ObservableList<Employee> personList = repository.getList();
+        if(personList.size() > 0){
+            employeeTable.setItems(personList);
         }
     }
-
 }
 
