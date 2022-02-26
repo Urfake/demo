@@ -36,4 +36,19 @@ public class MenuController {
             e.printStackTrace();
         }
     }
+    public void openDepartmentPage(ActionEvent event) {
+        try {
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("sample.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+            stage.setTitle("База отделов");
+            stage.setScene(scene);
+            stage.show();
+            // Hide this current window (if this is what you want)
+            //((Node)(event.getSource())).getScene().getWindow().hide();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

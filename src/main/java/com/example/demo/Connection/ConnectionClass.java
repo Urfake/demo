@@ -13,10 +13,11 @@ public class ConnectionClass {
 
         //Имя пользователя и пароль для подключения к базе данных
         String username = "root";
+        String password = "root";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection(url, username, "");
+            connection = DriverManager.getConnection(url, username, password);
 
             if (connection != null) {
                 System.out .println("Successfully connected to MySQL database test");
