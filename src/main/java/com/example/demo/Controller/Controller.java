@@ -96,27 +96,11 @@ public class Controller {
         }
         initializeTableValues();
     }
-
-    /**
-     * Следующие строки предназначены для создания объекта класса -ConnectionClass-
-     * и вызова его метода -getConnection()-
-     * Переменная -connection- далее используется для отправки запросов на базу данных
-     */
     ConnectionClass connectionClass = new ConnectionClass();
     Connection connection = connectionClass.getConnection();
 
     public ObservableList<Employee> employeeList = FXCollections.observableArrayList();
 
-    /**
-     * Метод -insertPerson(ActionEvent actionEvent)- привязан к кнопке -Создать- на главной странице
-     * при нажатии которой из текста полей -Fname, Lname, Ssn...- формируется
-     * запрос добавления(INSERT) в базу данных.
-     *
-     * Далее значения полей опустошаются и вызывается метод
-     * -initializeTableValues();- для заполнения таблицы новыми данными из Базы данных.
-     *
-     * @param actionEvent
-     */
     public void insertPerson(ActionEvent actionEvent) {
         try {
             Statement statement=connection.createStatement();
@@ -144,6 +128,20 @@ public class Controller {
         Sex.setText("");
         Salary.setText("");
 
+        initializeTableValues();
+    }
+
+    public void changePerson(String ssn){
+        try {
+            Statement statement=connection.createStatement();
+            String sql = "DELETE FROM employee WHERE ssn = '" + ssn + "'";
+            statement.executeUpdate(sql);
+
+            System.out.println("Success!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         initializeTableValues();
     }
 
