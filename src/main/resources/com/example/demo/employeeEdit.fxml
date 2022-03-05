@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controller.Employee.EmployeeEditController">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="350.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Controller.Controller">
     <children>
         <TextField fx:id="Fname" layoutX="24.0" layoutY="37.0" prefHeight="25.0" prefWidth="255.0" />
         <Label layoutX="24.0" layoutY="20.0" text="Имя" />
@@ -19,7 +19,7 @@
         <TextField fx:id="Lname" layoutX="300.0" layoutY="37.0" prefHeight="25.0" prefWidth="255.0" />
         <Label layoutX="300.0" layoutY="20.0" text="Фамилия" />
         <Label layoutX="301.0" layoutY="70.0" text="Дата рождения" />
-        <ComboBox fx:id="Sex" layoutX="300.0" layoutY="137.0" prefHeight="25.0" prefWidth="255.0" promptText="Выберите пол" />
+        <ComboBox fx:id="sex" layoutX="300.0" layoutY="137.0" prefHeight="25.0" prefWidth="255.0" promptText="Выберите пол" />
         <Label layoutX="301.0" layoutY="120.0" text="Пол" />
         <TextField fx:id="Salary" layoutX="24.0" layoutY="194.0" prefHeight="25.0" prefWidth="255.0" />
         <Label layoutX="25.0" layoutY="177.0" text="Зарплата" />

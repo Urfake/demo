@@ -1,6 +1,8 @@
 package com.example.demo.Controller;
 
 import com.example.demo.Connection.ConnectionClass;
+import com.example.demo.Main;
+import com.example.demo.Model.Department;
 import com.example.demo.Model.Employee;
 import com.example.demo.Repository.EmployeeRepository;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -8,8 +10,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -37,6 +43,7 @@ public class Controller {
     @FXML
     public TableColumn<Employee, Employee> actionColumn;
 
+
     @FXML
     public TextField Fname;
     @FXML
@@ -51,7 +58,8 @@ public class Controller {
     public TextField Sex;
     @FXML
     public TextField Salary;
-
+    @FXML
+    public ComboBox<Department> Dnumber;
     @FXML
     private void initialize(){
         fNameColumn.setCellValueFactory(cellData -> cellData.getValue().fnameProperty());
@@ -145,6 +153,18 @@ public class Controller {
         initializeTableValues();
     }
 
+    public void updatePerson(ActionEvent actionEvent) {
+        repository.updateEmployee(
+                Fname.getText(),
+                Lname.getText(),
+                Ssn.getText(),
+                String.valueOf(Bdate.getValue()),
+                Address.getText(),
+                Sex.getText(),
+                Salary.getText(),
+                Dnumber.getValue().getDnumber());
+        openEmployeePage(actionEvent);
+    }
 
 
 
@@ -156,6 +176,21 @@ public class Controller {
         ObservableList<Employee> personList = repository.getList();
         if(personList.size() > 0){
             employeeTable.setItems(personList);
+        }
+    }
+    public void openEmployeePage(ActionEvent event) {
+        try {
+            Stage stage = new Stage();
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("employeeTable.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 700, 450);
+            stage.setTitle("База сотрудников");
+            stage.setScene(scene);
+            stage.show();
+            // Hide this current window (if this is what you want)
+            //((Node)(event.getSource())).getScene().getWindow().hide();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

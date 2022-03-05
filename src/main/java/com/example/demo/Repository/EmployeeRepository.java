@@ -49,4 +49,44 @@ public class EmployeeRepository {
         }
         return list;
     }
+    public void deleteEmployee(Employee employee){
+        try {
+            Statement statement=connection.createStatement();
+            String sql = "DELETE FROM employee WHERE ssn = '" + employee.getSsn() + "'";
+            statement.executeUpdate(sql);
+
+            System.out.println("Successfully deleted employee with ssn: " + employee.getSsn());
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addEmployee(String Fname, String Lname, String Ssn, String Bdate, String Address, String Sex, String Salary, String Dnumber){
+        try {
+            Statement statement=connection.createStatement();
+            String sql = "INSERT INTO " +
+                    "employee(Fname, Lname, Ssn, Bdate, Address, Sex, Salary, Dnumber) " +
+                    "VALUES ('"+Fname+"','" + Lname+"','" + Ssn+"','" + Bdate+"','" + Address+"','" + Sex+"','" + Salary+"', '"+ Dnumber+"')";
+            statement.executeUpdate(sql);
+
+            System.out.println("Successfully created!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateEmployee(String Fname, String Lname, String Ssn, String Bdate, String Address, String Sex, String Salary, String Dnumber){
+        try {
+            Statement statement=connection.createStatement();
+            String sql = "UPDATE employee SET  Fname = '"+Fname+"', Lname = '"+Lname+"', Bdate = '"+Bdate+"', Address = '"+Address+"', Sex = '"+Sex+"', Salary = '"+Salary+"', Dnumber = '"+Dnumber+"' WHERE Ssn = '"+Ssn+"';";
+            statement.executeUpdate(sql);
+
+            System.out.println("Successfully updated!");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
