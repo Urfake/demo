@@ -39,7 +39,7 @@ public class MenuController {
     public void openDepartmentPage(ActionEvent event) {
         try {
             Stage stage = new Stage();
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("sample.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("departmentsample.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), 600, 400);
             stage.setTitle("База отделов");
             stage.setScene(scene);
